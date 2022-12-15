@@ -1,3 +1,10 @@
+# xmake files
+/build
+/.xmake
+
+# vscode configure
+/.vscode
+
 # Prerequisites
 *.d
 

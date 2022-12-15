@@ -1,71 +1,21 @@
-#include<iostream>
-#include<map>
-
-using namespace std;
+#include "products.h"
+// #include "factory.h"
 
 
-class ProductBase
+int main()
 {
-public:
-    ProductBase()
-    {
-        cout << "ProductBase constructor" << endl;
-    }
-    ~ProductBase();
+    string p1{"new1"};
+    string p2{"new2"};
+    string sp1{"subNew1"};
 
-    void operator()()
-    {
-        cout << "ProductBase()" << endl;
-    }
-};
+    ProductBase* pb = new ProductBase;
+    
+    // construct new1
+    ProductBase* pbn1 = ProductBase::New(p1);
 
-map<string, (*ProductBase)> ptrTables;
+    // construct new2
+    ProductBase* pbn2 = ProductBase::New(p2);
+    // construct sub-new1
 
-class ProductNew1: public ProductBase
-{
-public:
-    ProductNew1()
-    {
-        cout << "ProductNew1 constructor" << endl;
-    }
-
-    void operator()()
-    {
-        cout << "ProductNew1()" << endl;
-    }
-
-};
-
-class ProductNew2: public ProductBase
-{
-public:
-    ProductNew2()
-    {
-        cout << "ProductNew2 constructor" << endl;
-    }
-    ~ProductNew2();
-
-    void operator()()
-    {
-        cout << "ProductNew2()" << endl;
-    }
-};
-
-class SubProductNew1: public ProductNew1
-{
-public:
-    SubProductNew1()
-    {
-        cout << "subProductNew1 constructor" << endl;
-    }
-    ~SubProductNew1();
-
-    void operator()()
-    {
-        cout << "subProductNew1()" << endl;
-    }
-};
-
-
-
-
+    return 0;
+}
