@@ -11,11 +11,6 @@
 	typedef map<string, constructorPtr> constructorTable;		\
 	/* construct function pointer table pointer */			\
 	static constructorTable* constructorTablePtr_;			\
-	/* */								\
-	/* construct constructorTables*/ \
-	/* destroy ...*/\
-	\
-	\
 	/* Class to add constructor to table */ \
 	template<typename baseType>\
 	class addConstructorToTable\
@@ -23,36 +18,30 @@
 	public: \
 		/* define a function -- New */ \
 		static baseType* New(const string& typeName) \
-		{\
-			return (baseType*)(new baseType(typeName)); \
-		}\
+		{ return (baseType*)(new baseType(typeName)); }\
 		\
 		/* constructor */ \
 		addConstructorToTable( \
 				const string& lookup = baseType::typeName_\
 				)\
-		{\
-			construct\
-		}\
-		\
-		/* destroy */ \
+		{\}\
 		~addConstructorToTable() \
-		{\
-			/**/\
-		}\
-		\
 	};\
-	\
-	\
-	/* add removable constructor to table */\
-	class addRemovableConstructorToTable\
-{\
-	\
-}\
-	
-	
-	/* Constructor aid */
-#define defineRunTimeSelectionTableConstructor(baseType, argNames) \
+	/* add removable constructor to table */	\
+	class addRemovableConstructorToTable		\
+	{};\
+
+//Constructor aid 
+#define defineRunTimeSelectionTableConstructor(baseType, argNames) 
+
+// Create pinter to hash-table of functions
+#define defineRunTimeSelectionTablePtr(baseType, argNames)
+
+
+// Define run-time selection table
+#define defineRunTimeSelectionTable(baseType, argNames)
+
+// 
 
 
 
