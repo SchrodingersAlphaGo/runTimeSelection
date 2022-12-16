@@ -4,32 +4,47 @@
 #include <string>
 #include <map>
 
-#define declareRTStable(baseType, argName)				\
+// declareRTST(
+// 	autoPtr, 
+// 	classBase,  // baseType
+// 	Word, 		// argName
+// 	(const word& classDerivedTypeName),  //argList
+// 	(classDerivedTypeName)	// parList
+// )
+#define declareRTStable(baseType, argList, parList)				\
 	/* construct function pointer */				\
-	typedef baseType* (*constructorPtr)(const string& typeName);	\
+	typedef baseType* (*constructorPtr)argList;	\
 	/* construct function table */					\
 	typedef map<string, constructorPtr> constructorTable;		\
 	/* construct function pointer table pointer */			\
 	static constructorTable* constructorTablePtr_;			\
+	static void constructConstructorTables(); \
+	static void destroyConstructorTable();\
+	\
 	/* Class to add constructor to table */ \
-	template<typename baseType>\
-	class addConstructorToTable\
+	template<typename baseTypeType>\
+	class addWordConstructorToTable\
 	{ \
 	public: \
 		/* define a function -- New */ \
-		static baseType* New(const string& typeName) \
-		{ return (baseType*)(new baseType(typeName)); }\
-		\
+		static baseTypeType* New argList \
+		{ return (baseTypeType*)(new baseTypeType(typeName)); }\
+										\
 		/* constructor */ \
-		addConstructorToTable( \
-				const string& lookup = baseType::typeName_\
+		addWordConstructorToTable( \
+				const string& lookup = baseTypeType::typeName_\
 				)\
-		{\}\
-		~addConstructorToTable() \
-	};\
-	/* add removable constructor to table */	\
-	class addRemovableConstructorToTable		\
-	{};\
+		{\
+			constructorConstructorTables(); \
+			if(!constructorTablePtr_->insert(lookup, New) \
+			{ cout << "Duplicate entry: " << lookup << endl;\
+				exit(1);} \
+		}\
+		/*~addConstructorToTable(){}*/ \
+	};
+	/* add removable constructor to table */	
+/*	class addRemovableConstructorToTable	*/	
+	
 
 //Constructor aid 
 #define defineRunTimeSelectionTableConstructor(baseType, argNames) 
@@ -39,7 +54,18 @@
 
 
 // Define run-time selection table
-#define defineRunTimeSelectionTable(baseType, argNames)
+#define defineRunTimeSelectionTable(baseType, argNames)\
+	baseType::constructorTable* baseType::constructorTablePtr_ = null;\
+	void baseType::constructConstructorTables()\
+{\
+			
+			static bool constructed = false; \
+			if (!constructed) \
+			{\
+				constructed = true;	\
+				baseType::constructorTablePtr = 	\
+				new baseType::constructorTable; 	\
+			}\
 
 // 
 
